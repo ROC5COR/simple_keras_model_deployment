@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Model Deployment</title>
+</head>
+<body>
+	<h3>Vector Direction</h3>
+
+	<input id="first" type="number">
+	<input id="second" type="number">
+	<input id="third" type="number">
+	<button onclick="sendData();">Send</button>
+	<br>
+	<p id="result"></p>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script type="text/javascript">
+		function sendData(){
+			var v1 = document.getElementById("first").value;
+			var v2 = document.getElementById("second").value;
+			var v3 = document.getElementById("third").value;
+			var data = JSON.stringify({data:[v1,v2,v3]});
+
+			$.ajax({
+			    type: "POST",
+			    url: "/",
+			    data: data,
+			    contentType: "application/json; charset=utf-8",
+			    //dataType: "json",
+			    success: function(data){
+			    	console.log(data);
+			    	var result = document.getElementById("result");
+			    	result.innerHTML = 'Server reply: '+ data.split(':')[1].trim();
+			    },
+			    failure: function(errMsg) {
+			        alert(errMsg);
+			    }
+			});
+		}
+	</script>
+
+</body>
+</html>
